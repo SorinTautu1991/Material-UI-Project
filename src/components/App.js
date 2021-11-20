@@ -10,39 +10,34 @@ const App = () => {
       <BrowserRouter>
         <Header />
         <Routes>
-          <Route exact path="/" component={() => <div>Home</div>} />
           <Route
             exact
-            path="/services"
-            component={() => {
-              return <div>Services</div>;
+            path="/"
+            element={() => {
+              return <div>Home</div>;
             }}
           />
+          <Route exact path="/services" element={() => <div>Services</div>} />
           <Route
             exact
             path="/customsoftware"
-            component={() => <div>Custom software</div>}
+            element={() => <div>Custom software</div>}
           />
+
           <Route
             exact
             path="/mobileapps"
-            component={() => <div>Mobile apps</div>}
+            element={() => <div>Mobile apps</div>}
           />
-          <Route
-            exact
-            path="/websites"
-            component={() => {
-              return <div>Websites</div>;
-            }}
-          />
+          <Route exact path="/websites" element={() => <div>Websites</div>} />
           <Route
             exact
             path="/revolution"
-            component={() => <div>Revolution</div>}
+            element={() => <div>Revolution</div>}
           />
-          <Route exact path="/about" component={() => <div>About</div>} />
-          <Route exact path="/contact" component={() => <div>Contact</div>} />
-          <Route exact path="/estimate" component={() => <div>Estimate</div>} />
+          <Route exact path="/about" element={() => <div>About</div>} />
+          <Route exact path="/contact" element={() => <div>Contact</div>} />
+          <Route exact path="/estimate" element={() => <div>Estimate</div>} />
         </Routes>
       </BrowserRouter>
     </ThemeProvider>
