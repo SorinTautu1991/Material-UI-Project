@@ -18,7 +18,7 @@ import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
 
-import logo from "../../../assets/logo.svg";
+import logo from "../../assets/logo.svg";
 
 const ElevationScroll = (props) => {
   const { children } = props;
@@ -99,18 +99,21 @@ const useStyles = makeStyles((theme) => ({
     color: "white",
     opacity: 0.7,
   },
-  drawerItemSelected: { opacity: 1 },
+  drawerItemSelected: {
+    "& .MuiListItemText-root": { opacity: 1 },
+  },
   drawerItemEstimate: {
     backgroundColor: theme.palette.common.orange,
   },
+  appbar: {
+    zIndex: theme.zIndex.modal + 1,
+  },
 }));
 
-const Header = () => {
+const Header = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   const classes = useStyles();
-  const [value, setValue] = useState(0);
   const [anchorEl, setAnchorEl] = useState(null);
   const [openMenu, setOpenMenu] = useState(false);
-  const [selectedIndex, setSelectedIndex] = useState(0);
   const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
   const theme = useTheme();
   const matches = useMediaQuery(theme.breakpoints.down("md"));
@@ -207,7 +210,7 @@ const Header = () => {
         {routes.map((route, index) => {
           return (
             <Tab
-              key={index}
+              key={`${route.name}-${index}`}
               className={classes.tab}
               component={Link}
               to={route.link}
@@ -232,6 +235,7 @@ const Header = () => {
         classes={{ paper: classes.menu }}
         elevation={0}
         keepMounted
+        style={{ zIndex: 1302 }}
       >
         {menuOptions.map((option, i) => {
           return (
@@ -239,7 +243,7 @@ const Header = () => {
               component={Link}
               to={option.link}
               classes={{ root: classes.menuItem }}
-              key={option}
+              key={`${option.link}-${i}`}
               onClick={(event) => {
                 handleMenuItemClick(event, i);
                 setValue(1);
@@ -265,29 +269,24 @@ const Header = () => {
         onOpen={() => setOpenDrawer(true)}
         classes={{ paper: classes.drawer }}
       >
+        <div className={classes.toolbarMargin} />
         <List disablePadding>
           {routes.map((route, index) => {
             return (
               <ListItem
-                key={index}
+                key={`${route.name}-${index}`}
                 divider
                 button
                 component={Link}
                 to={route.link}
                 selected={value === route.activeIndex}
+                classes={{ selected: classes.drawerItemSelected }}
                 onClick={() => {
                   setOpenDrawer(false);
                   setValue(route.activeIndex);
                 }}
               >
-                <ListItemText
-                  className={
-                    value === route.activeIndex
-                      ? [classes.drawerItem, classes.drawerItemSelected]
-                      : classes.drawerItem
-                  }
-                  disableTypography
-                >
+                <ListItemText className={classes.drawerItem} disableTypography>
                   {route.name}
                 </ListItemText>
               </ListItem>
@@ -303,17 +302,13 @@ const Header = () => {
             button
             component={Link}
             to="/estimate"
-            className={classes.drawerItemEstimate}
+            classes={{
+              root: classes.drawerItemEstimate,
+              selected: classes.drawerItemSelected,
+            }}
             selected={value === 5}
           >
-            <ListItemText
-              className={
-                value === 5
-                  ? [classes.drawerItem, classes.drawerItemSelected]
-                  : classes.drawerItem
-              }
-              disableTypography
-            >
+            <ListItemText className={classes.drawerItem} disableTypography>
               Free Estimate
             </ListItemText>
           </ListItem>
@@ -332,7 +327,7 @@ const Header = () => {
   return (
     <>
       <ElevationScroll>
-        <AppBar position="fixed">
+        <AppBar position="fixed" className={classes.appbar}>
           <Toolbar disableGutters>
             <Button
               component={Link}
