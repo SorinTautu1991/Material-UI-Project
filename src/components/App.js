@@ -19,7 +19,16 @@ const App = () => {
           setSelectedIndex={setSelectedIndex}
         />
         <Routes>
-          <Route exact path="/" element={<LandingPage />} />
+          <Route
+            exact
+            path="/"
+            element={
+              <LandingPage
+                setValue={setValue}
+                setSelectedIndex={setSelectedIndex}
+              />
+            }
+          />
           <Route exact path="/services" element={() => <div>Services</div>} />
           <Route
             exact
