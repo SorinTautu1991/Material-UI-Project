@@ -14,8 +14,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.common.blue,
     width: "100%",
     zIndex: 1302,
-    // position: "relative",
-    position: "fixed",
+    position: "relative",
     bottom: 0,
   },
   adorment: {
@@ -59,7 +58,11 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
   return (
     <footer className={classes.footer}>
       <Hidden mdDown>
-        <Grid container justify="center" className={classes.mainContainer}>
+        <Grid
+          container
+          justifyContent="center"
+          className={classes.mainContainer}
+        >
           <Grid item className={classes.gridItem}>
             <Grid container direction="column" spacing={2}>
               <Grid
@@ -217,7 +220,7 @@ const Footer = ({ value, setValue, selectedIndex, setSelectedIndex }) => {
         className={classes.adorment}
       />
       <Grid
-        justify="flex-end"
+        justifyContent="flex-end"
         container
         className={classes.socialContainer}
         spacing={2}
